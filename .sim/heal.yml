@@ -89,8 +89,8 @@ personas:
     note: open the login and register page
   - do: fill
     target: '#id_registration-email'
-    value: alex+shop@example.com
-    note: enter the registration email alex+shop@example.com
+    value: alex+shop-{uid}@example.com
+    note: enter a plus-addressed registration email (alex+shop-<id>@example.com)
   - do: fill
     target: '#id_registration-password1'
     value: Sup3r-secret-pw!
