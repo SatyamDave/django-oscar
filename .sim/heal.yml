@@ -1,0 +1,171 @@
+name: django-oscar sandbox
+start: .sim/start.sh
+ready_path: /en-gb/
+ready_timeout_s: 60
+link: []
+source_globs:
+- src/oscar/apps/offer/*.py
+- src/oscar/apps/customer/*.py
+- src/oscar/apps/basket/views.py
+- src/oscar/apps/basket/forms.py
+- src/oscar/templates/oscar/basket/*.html
+- src/oscar/templates/oscar/basket/partials/*.html
+- src/oscar/templates/oscar/customer/login_registration.html
+personas:
+- id: bargain-hunter
+  goal: add a book to the basket, apply promo code SAVE10 and check out as a guest
+  flow:
+  - do: goto
+    target: /en-gb/catalogue/cryptonomicon_14/
+    note: open the Cryptonomicon product page
+  - do: click
+    target: '#add_to_basket_form button[type=submit]'
+    note: add Cryptonomicon to the basket
+  - do: click
+    target: '#messages a[href$=''/basket/'']'
+    note: open the basket
+  - do: click
+    target: '#voucher_form_link a'
+    note: open the voucher code form
+  - do: fill
+    target: '#id_code'
+    value: SAVE10
+    note: enter promo code SAVE10
+  - do: click
+    target: '#voucher_form button[type=submit]'
+    note: apply promo code SAVE10
+  - do: click
+    target: '#content_inner a[href$=''/checkout/'']'
+    note: proceed to checkout from the basket
+  - do: fill
+    target: '#id_username'
+    value: hunter@example.com
+    note: enter guest email
+  - do: check
+    target: '#id_options_0'
+    note: choose guest checkout
+  - do: click
+    target: form.card button[type=submit]
+    note: continue as guest
+  - do: fill
+    target: '#id_first_name'
+    value: Sam
+    note: enter first name
+  - do: fill
+    target: '#id_last_name'
+    value: Shopper
+    note: enter last name
+  - do: fill
+    target: '#id_line1'
+    value: 1 High Street
+    note: enter address line 1
+  - do: fill
+    target: '#id_line4'
+    value: London
+    note: enter town
+  - do: fill
+    target: '#id_postcode'
+    value: N1 9GU
+    note: enter postcode
+  - do: select
+    target: '#id_country'
+    value: GB
+    note: select country United Kingdom
+  - do: click
+    target: form button[type=submit]:has-text('Continue')
+    note: continue to payment
+  - do: click
+    target: '#view_preview'
+    note: continue to order preview
+  - do: click
+    target: '#place-order'
+    note: place the order
+  success_url_contains: /checkout/thank-you/
+- id: power-user
+  goal: register a new account with a plus-addressed email and land signed in on the profile page
+  flow:
+  - do: goto
+    target: /en-gb/accounts/login/
+    note: open the login and register page
+  - do: fill
+    target: '#id_registration-email'
+    value: alex+shop@example.com
+    note: enter the registration email alex+shop@example.com
+  - do: fill
+    target: '#id_registration-password1'
+    value: Sup3r-secret-pw!
+    note: enter a password
+  - do: fill
+    target: '#id_registration-password2'
+    value: Sup3r-secret-pw!
+    note: confirm the password
+  - do: click
+    target: '#register_form button[type=submit]'
+    note: submit the registration form
+  - do: goto
+    target: /en-gb/accounts/profile/
+    note: open the account profile page
+  success_text: Delete profile
+- id: impatient-mobile
+  goal: add a book to the basket and check out as a guest on a phone
+  flow:
+  - do: goto
+    target: /en-gb/catalogue/snow-crash_12/
+    note: open the Snow Crash product page
+  - do: click
+    target: '#add_to_basket_form button[type=submit]'
+    note: add Snow Crash to the basket
+  - do: click
+    target: '#messages a[href$=''/basket/'']'
+    note: open the basket
+  - do: click
+    target: '#content_inner a[href$=''/checkout/'']'
+    note: proceed to checkout from the basket
+  - do: fill
+    target: '#id_username'
+    value: phone@example.com
+    note: enter guest email
+  - do: check
+    target: '#id_options_0'
+    note: choose guest checkout
+  - do: click
+    target: form.card button[type=submit]
+    note: continue as guest
+  - do: fill
+    target: '#id_first_name'
+    value: Sam
+    note: enter first name
+  - do: fill
+    target: '#id_last_name'
+    value: Shopper
+    note: enter last name
+  - do: fill
+    target: '#id_line1'
+    value: 1 High Street
+    note: enter address line 1
+  - do: fill
+    target: '#id_line4'
+    value: London
+    note: enter town
+  - do: fill
+    target: '#id_postcode'
+    value: N1 9GU
+    note: enter postcode
+  - do: select
+    target: '#id_country'
+    value: GB
+    note: select country United Kingdom
+  - do: click
+    target: form button[type=submit]:has-text('Continue')
+    note: continue to payment
+  - do: click
+    target: '#view_preview'
+    note: continue to order preview
+  - do: click
+    target: '#place-order'
+    note: place the order
+  success_url_contains: /checkout/thank-you/
+pr:
+  repo: SatyamDave/django-oscar
+  base: sim/seeded-bugs
+seeded_bugs_note: This branch has bugs seeded by hand for the sim heal demo; the upstream django-oscar release is not affected.
