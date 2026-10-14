@@ -70,7 +70,5 @@ def normalise_email(email):
     clean_email = email.strip()
     if "@" in clean_email:
         local, host = clean_email.rsplit("@", 1)
-        if "+" in local:
-            local = re.sub(r"\+.*", r"\1", local)
         return local + "@" + host.lower()
     return clean_email
