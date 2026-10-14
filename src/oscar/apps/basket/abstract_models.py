@@ -962,7 +962,7 @@ class AbstractLine(models.Model):
         if excl_tax_discounts:
             # these are discounts that return a value excluding tax, we can simply
             # subtract this value from line_price_excl_tax to get to line_price_excl_tax_incl_discounts
-            return self.line_price_excl_tax - excl_tax_discounts
+            return max(0, self.line_price_excl_tax - excl_tax_discounts)
 
         # This is a tricky situation.  We know the discount as calculated
         # against tax inclusive prices but we need to guess how much of the
@@ -997,7 +997,7 @@ class AbstractLine(models.Model):
         # calculated against the tax-exclusive prices, then the line price
         # including tax
         if self.line_price_incl_tax is not None and incl_tax_discounts:
-            return self.line_price_incl_tax - incl_tax_discounts
+            return max(0, self.line_price_incl_tax - incl_tax_discounts)
         elif self.line_price_excl_tax is not None and excl_tax_discounts:
             return round_half_up_two_dec(
                 self.line_price_excl_tax_incl_discounts / self._tax_ratio
