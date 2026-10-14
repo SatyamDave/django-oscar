@@ -97,7 +97,7 @@ class PercentageDiscountBenefit(Benefit):
             if quantity_affected <= 0:
                 break
 
-            line_discount = discount_percent * price * int(quantity_affected)
+            line_discount = discount_percent / D("100.0") * price * int(quantity_affected)
 
             if discount_amount_available is not None:
                 line_discount = min(line_discount, discount_amount_available)
