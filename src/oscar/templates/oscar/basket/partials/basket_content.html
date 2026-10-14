@@ -157,7 +157,8 @@
         <div class="form-group clearfix">
             <div class="row">
                 <div class="col-sm-4 offset-sm-8">
-                    <a href="{% url 'checkout:index' %}" class="btn btn-lg btn-primary btn-block">{% trans "Proceed to checkout" %}</a>
+                    <a href="{% url 'checkout:index' %}" class="btn btn-lg btn-primary btn-block d-none d-sm-block">{% trans "Proceed to checkout" %}</a>
+                    <a href="{% url 'checkout:index' %}" id="checkout_link_mobile" class="btn btn-lg btn-primary btn-block d-sm-none" hidden>{% trans "Proceed to checkout" %}</a>
                 </div>
             </div>
         </div>

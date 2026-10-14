@@ -33,4 +33,7 @@
         'basketURL': '{% url 'basket:summary' %}'
     };
     oscar.basket.init(options);
+    if (window.matchMedia('(max-width: 575.98px)').matches) {
+        document.getElementById('checkout_bar').hidden = false;
+    }
 {% endblock %}

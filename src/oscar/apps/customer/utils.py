@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.utils.encoding import force_bytes
@@ -68,5 +70,7 @@ def normalise_email(email):
     clean_email = email.strip()
     if "@" in clean_email:
         local, host = clean_email.rsplit("@", 1)
+        if "+" in local:
+            local = re.sub(r"\+.*", r"\1", local)
         return local + "@" + host.lower()
     return clean_email
