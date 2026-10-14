@@ -106,7 +106,7 @@ personas:
     target: /en-gb/accounts/profile/
     note: open the account profile page
   success_text: Delete profile
-- id: impatient-mobile
+- id: rushed-mobile
   goal: add a book to the basket and check out as a guest on a phone
   flow:
   - do: goto
